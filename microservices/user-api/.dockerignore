@@ -1,0 +1,9 @@
+.idea
+dist
+test
+node_modules
+.git
+.dockerignore
+.gitignore
+
+.env.local

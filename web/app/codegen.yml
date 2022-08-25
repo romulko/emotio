@@ -1,0 +1,17 @@
+overwrite: true
+schema:
+  - http://localhost:5000/graphql
+#  - https://emotio.life/graphql
+  - src/services/apollo/schema.graphql
+documents: "src/**"
+generates:
+  src/services/apollo/generated/graphql.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+    config:
+      skipTypename: true
+      withHooks: true
+      withComponent: false
+      withHOC: false

@@ -1,0 +1,25 @@
+#!groovy
+properties([disableConcurrentBuilds()])
+
+pipeline {
+    agent {
+        label 'master'
+    }
+
+    options {
+        timestamps()
+    }
+
+    stages {
+        stage('create docker images') {
+            steps {
+                echo '====== start building image ======'
+                sh 'docker rmi emotio/app || true'
+                sh 'docker build -t emotio/app:latest .'
+                sh 'docker stop app || true'
+                sh 'docker rm app || true'
+                sh 'docker run app || true'
+            }
+        }
+    }
+}

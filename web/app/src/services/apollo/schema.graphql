@@ -1,0 +1,8 @@
+extend type Query {
+    isHeaderHidden: Boolean
+    abcFilter: AbcFilter
+}
+
+type AbcFilter {
+    lifeAreas: [String!]
+}

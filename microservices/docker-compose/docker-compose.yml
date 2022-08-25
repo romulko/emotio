@@ -1,0 +1,68 @@
+version: '3.1'
+
+services:
+  nginx:
+    image: emotio/nginx:latest
+    restart: always
+    container_name: nginx
+    volumes:
+      - /opt/app/user_data:/opt/app/user_data
+    ports:
+      - "80:80"
+      - "8081:8081"
+      - "443:443"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    volumes:
+      - /opt/app/rabbitmq_data:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  website:
+    image: emotio/website
+    restart: always
+    container_name: website
+
+  app:
+    image: emotio/app
+    restart: always
+    container_name: app
+
+  mongo:
+    image: mongo
+    restart: always
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - /opt/app/mongo_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: emotio
+      MONGO_INITDB_ROOT_PASSWORD: emotio
+
+  mongo-express:
+    image: mongo-express:0.54
+    restart: always
+    container_name: mongo-express
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: emotio
+      ME_CONFIG_BASICAUTH_PASSWORD: emotio
+      ME_CONFIG_MONGODB_ADMINUSERNAME: emotio
+      ME_CONFIG_MONGODB_ADMINPASSWORD: emotio
+    expose:
+      - 8081
+    depends_on:
+      - mongo
+
+  user-api:
+    image: emotio/user-api
+    restart: always
+    container_name: user-api
+    volumes:
+      - /opt/app/user_data:/opt/app/user_data
+    depends_on:
+      - mongo
+      - rabbitmq

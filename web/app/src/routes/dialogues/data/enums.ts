@@ -1,0 +1,13 @@
+export enum DialogueType {
+  COGNITIVE_RESTRUCTURING = 'COGNITIVE_RESTRUCTURING',
+  ABC = 'ABC',
+  DEEP_CONVICTION = 'DEEP_CONVICTION',
+  PROS_CONS = 'PROS_CONS',
+  WANT = 'WANT',
+}
+
+export enum QuestionType {
+  INPUT = 'INPUT',
+  SELECTIONS = 'SELECTIONS',
+  FINISH = 'FINISH',
+}
